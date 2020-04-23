@@ -1,3 +1,4 @@
+/* eslint-disable strict */
 /**
  * Example store structure
  */
@@ -5,30 +6,80 @@ const store = {
   // 5 or more questions are required
   questions: [
     {
-      question: 'What color is broccoli?',
+      question: 'Ethan Chandler is more than just a gunslinger. What kind of creature is he?',
       answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
+        'Warlock',
+        'Vampire',
+        'Ghost',
+        'Werewolf'
       ],
-      correctAnswer: 'green'
+      correctAnswer: 'Werewolf'
     },
     {
-      question: 'What is the current year?',
+      question: 'What is Dracula\'s profession as Dr. Sweet?',
       answers: [
-        '1970',
-        '2015',
-        '2019',
-        '2005'
+        'Doctor',
+        'Zookeeper',
+        'Veterinarian',
+        'Zoologist'
       ],
-      correctAnswer: '2019'
-    }
+      correctAnswer: 'Zoologist'
+    },
+    {
+      question: 'What\s wrong with Vanessa Ives?',
+      answers: ['She\'s a vampire','She\'s dead','She\'s a ghost','She\'s possessed'],
+      correctAnswer: 'She\'s possessed'
+    },
+    {
+      question: 'How old is Dorian Gray on the show?',
+      answers: [
+        'Over 100 years old',
+        'Over 300 years old',
+        'Over 400 years old',
+        'Over 700 years old'
+      ],
+      correctAnswer: 'Over 400 years old'
+    },
+    {
+      question: 'Dr Frankenstein\'s creature John Clare was employed as what before he died?',
+      answers: [
+        'Actor',
+        'Poet',
+        'Stagehand',
+        'Teacher'
+      ],
+      correctAnswer: 'Stagehand'
+    },
   ],
   quizStarted: false,
-  questionNumber: 0,
-  score: 0
+  questionNumber: 0;
+  score: 0;
+  totalQuestions: this.questions.length
 };
+
+
+function initialRender(){
+  //Supply the html with the main page content
+}
+
+function eventHandlerStartButton(){
+  //Question 1 of the quiz and associated html change button text/functionality
+}
+
+function eventHandlerQuestionCheck(){
+  //post the html for correct/wrong, post the correct answer, change the submit functionality
+}
+
+function answeredQuestionEventHandler(){
+  //test if the current question is last question
+  //If yes, then move to final page and all associated html (change button function)
+  //If no, then move to next question page and all associated html (change button function)
+}
+
+function eventHandlerReset(){
+  //reset the variables for questionNumber and score (and quizStarted?)
+  //fill html with initialRender condition
+}
 
 /**
  * 
