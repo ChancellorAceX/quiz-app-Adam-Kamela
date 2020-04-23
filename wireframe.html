@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Name</title>
+    <link href="app.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header>
+        <h1>Penny Dreadful Quiz</h1>
+    </header>
+    <main>
+        <ul>
+            <h3>Intro statement / Question / Correct! / Quiz Complete statement</h3>
+            <div>
+                <input type="radio" name="question-1-answers" id="question-1-answers-A" value="A" />
+                <label for="question-1-answers-A">A) Computer Styled Sections </label>
+            </div>
+            
+            <div>
+                <input type="radio" name="question-1-answers" id="question-1-answers-B" value="B" />
+                <label for="question-1-answers-B">B) Cascading Style Sheets</label>
+            </div>
+            
+            <div>
+                <input type="radio" name="question-1-answers" id="question-1-answers-C" value="C" />
+                <label for="question-1-answers-C">C) Crazy Solid Shapes</label>
+            </div>
+            
+            <div>
+                <input type="radio" name="question-1-answers" id="question-1-answers-D" value="D" />
+                <label for="question-1-answers-D">D) None of the above</label>
+            </div>
+            <p class='correctStatement hidden'>
+                The correct answer was:
+            </p>
+        
+        </ul>
+        <input type="submit" value='Begin/Next/New Quiz'>
+    </main>
+    <footer>
+        <h5 class='Progress'>Question Progress: 1/5</h5>
+        <h5 class = 'Score'>Current Score: 1/5</h5>
+    </footer>
+</body>
+</html>
