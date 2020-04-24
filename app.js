@@ -13,7 +13,8 @@ const store = {
         'Ghost',
         'Werewolf'
       ],
-      correctAnswer: 'Werewolf'
+      correctAnswer: 'Werewolf',
+      answered: false
     },
     {
       question: 'What is Dracula\'s profession as Dr. Sweet?',
@@ -23,12 +24,14 @@ const store = {
         'Veterinarian',
         'Zoologist'
       ],
-      correctAnswer: 'Zoologist'
+      correctAnswer: 'Zoologist',
+      answered: false
     },
     {
       question: 'What\s wrong with Vanessa Ives?',
       answers: ['She\'s a vampire','She\'s dead','She\'s a ghost','She\'s possessed'],
-      correctAnswer: 'She\'s possessed'
+      correctAnswer: 'She\'s possessed',
+      answered: false
     },
     {
       question: 'How old is Dorian Gray on the show?',
@@ -38,7 +41,8 @@ const store = {
         'Over 400 years old',
         'Over 700 years old'
       ],
-      correctAnswer: 'Over 400 years old'
+      correctAnswer: 'Over 400 years old',
+      answered: false
     },
     {
       question: 'Dr Frankenstein\'s creature John Clare was employed as what before he died?',
@@ -48,101 +52,128 @@ const store = {
         'Stagehand',
         'Teacher'
       ],
-      correctAnswer: 'Stagehand'
+      correctAnswer: 'Stagehand',
+      answered: false
     },
   ],
   quizStarted: false,
   questionNumber: 0,
-  score: 0,
-  totalQuestions: 5
+  score: 0
 };
 
-let currentStore = store;
-
-function generateString(obj = currentStore){
-  if (!currentStore.quizStarted){
+function generateString(obj){
+  if (!store.quizStarted){
     return `
             <h2>Welcome to the dreadful Penny Dreadful quiz!</h2>
             <h3>Press the button below to begin:</h3>
-            <form id='quizForm'>
-            <button type='submit' (click)='submitForm()'>Begin</button>
-            </form>`
+            <button type='button' class='startButton'>Begin</button>`;
   }
-  else if (currentStore.questionNumber!==currentStore.totalQuestions){
+  else if (store.questionNumber!==store.questions.length){
     return `
-            <h3>${currentStore.questions[currentStore.questionNumber].question}</h3>
+            <h3>${store.questions[store.questionNumber].question}</h3>
             <form id='quizForm'>
-            <input type='radio' id='A' name='A' value=0>
-            <label for='A'></label>${currentStore.questions[currentStore.questionNumber].answers[0]}<br>
-            <input type='radio' id='B' name='B' value=1>
-            <label for='B'></label>${currentStore.questions[currentStore.questionNumber].answers[1]}<br>
-            <input type='radio' id='C' name='C' value=2>
-            <label for='C'></label>${currentStore.questions[currentStore.questionNumber].answers[2]}<br>
-            <input type='radio' id='D' name='D' value=3>
-            <label for='D'></label>${currentStore.questions[currentStore.questionNumber].answers[3]}<br>
-            <input type="submit" value='Begin Quiz'>
+            <div>
+            <input type='radio' id='A' name='answer' value="${store.questions[store.questionNumber].answers[0]}">
+            <label for='A'></label>${store.questions[store.questionNumber].answers[0]}</label>
+            </div>
+            <div>
+            <input type='radio' id='B' name='answer' value="${store.questions[store.questionNumber].answers[1]}">
+            <label for='B'></label>${store.questions[store.questionNumber].answers[1]}</label>
+            </div>
+            <div>
+            <input type='radio' id='C' name='answer' value="${store.questions[store.questionNumber].answers[2]}">
+            <label for='C'>${store.questions[store.questionNumber].answers[2]}</label>
+            </div>
+            <div>
+            <input type='radio' id='D' name='answer' value="${store.questions[store.questionNumber].answers[3]}">
+            <label for='D'></label>${store.questions[store.questionNumber].answers[3]}</label>
+            </div>
+            <button type='submit' class='submit' name='submit'>Submit</button>
             </form>
             <p class='correctStatement hidden'>
-                The correct answer was:
             </p>
         <footer>
-            <h5 class='Progress hidden'>Question Progress: ${currentStore.questionNumber}/5</h5>
-            <h5 class='Score hidden'>Current Score: ${currentStore.score}/5</h5>
+            <h5 class='Progress'>Question Progress: ${store.questionNumber+1}/${store.questions.length}</h5>
+            <h5 class='Score'>Current Score: ${store.score}/${store.questions.length}</h5>
         </footer>`;
   }
   else {
-    return ''
+    return `
+        <h2>Congratulations!<h2>
+        <h3>Here's your final score:</h3>
+        <h3>${store.score} out of ${store.questions.length}</h3>
+        <button type='button' class='restartButton'>Take it again?</button>`
   }
 }
 
-function handleRender(){
+function handleRender(string){
   //Supply the html with the main page content
-  console.log('render ran')
-  $('main').html(generateString())
+  console.log('render ran');
+  $('main').html(generateString(string));
 }
 
 function handleStartButton(){
   //Question 1 of the quiz and associated html change button text/functionality
-  console.log('start ran')
-  $('main').on('click','#quizForm',function(){
-    if (!currentStore.quizStarted){
-      currentStore.quizStarted = true
-    }
-    else if ($('h5').is('hidden')){
-      console.log('button test');
-      currentStore.questionNumber++;
-    }
-    else if (currentStore.questionNumber===currentStore.totalQuestions){
-      currentStore = store
-    }
-    else {};
-    console.log(currentStore.questionNumber)
-    handleRender(currentStore)})
+  console.log('start ran');
+  $('main').on('click','.startButton',function(){
+    store.quizStarted = true;
+    handleRender(store);});
 }
 
 function handleQuestionCheck(){
   //post the html for correct/wrong, post the correct answer, change the submit functionality
-  console.log('question check ran')
-}
-
-function handleAnsweredQuestion(){
-  //test if the current question is last question
-  //If yes, then move to final page and all associated html (change button function)
-  //If no, then move to next question page and all associated html (change button function)
-  console.log('answered question ran')
+  console.log('question check ran');
+  $('main').on('submit','#quizForm',function(event){
+    event.preventDefault();
+    if (!$('input:radio',this).is(':checked')){
+      alert('You must select an answer')
+    }
+    else {
+      if (!store.questions[store.questionNumber].answered){
+        if ($("form input[type='radio']:checked").val()===store.questions[store.questionNumber].correctAnswer){
+          $('p').text('Correct!');
+          store.score++;
+        }
+        else {
+          $('p').text(`Incorrect. The correct answer was: ${store.questions[store.questionNumber].correctAnswer}`);
+        };
+        store.questions[store.questionNumber].answered=true;
+        $('p').toggleClass('hidden');
+        $('h5[class="Score"]').text(`Current Score: ${store.score}/${store.questions.length}`)
+        $('.submit').text('Next Question')
+      }
+      else if (store.questions.length===store.questionNumber){
+        null;
+      }
+      else{
+        store.questionNumber++
+        $('p').toggleClass('hidden');
+        $('.submit').text('Submit')
+        handleRender(store);
+      }
+    }
+  });
 }
 
 function handleReset(){
   //reset the variables for questionNumber and score (and quizStarted?)
   //fill html with initialRender condition
-  console.log('reset ran')
+  console.log('reset ran');
+  $('main').on('click','.restartButton',function(){
+    for(let i=0;i<store.questions.length;i++){
+      store.questions[i].answered=false;
+    }
+    store.quizStarted=false;
+    store.questionNumber=0;
+    store.score=0;
+    handleRender(store)
+  })
 }
 
 function handleApp(){
   handleRender();
   handleStartButton();
   handleQuestionCheck();
-  handleAnsweredQuestion();
   handleReset();
 }
 
