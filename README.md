@@ -1,15 +1,15 @@
+Adam and Kamela's Quiz Application
+
 Quiz topic: Complete
-Gather Image Assets : 
-Back of Napkin designs :
-Create greybox html wireframes.
+Gather Image Assets : Complete
+Back of Napkin designs : Complete
+Create greybox html wireframes: Complete
     -Should include minimal css and no js
     -Wireframes for each view can be stored together in a single html file
     -store wireframe on github and deploy
 
 
 Quiz topic - Penny Dreadful
-
-**Kamela - Questions**
 
 1) Ethan Chandler is more than just a gunslinger. What kind of creature is he?
 -Warlock
@@ -45,8 +45,6 @@ Answer: Over 400 years old
 -Stagehand
 -Teacher
 -Answer: Stagehand
-
-
 
 
 

@@ -52,35 +52,101 @@ const store = {
     },
   ],
   quizStarted: false,
-  questionNumber: 0;
-  score: 0;
-  totalQuestions: this.questions.length
+  questionNumber: 0,
+  score: 0,
+  totalQuestions: 5
 };
 
+let currentStore = store;
 
-function initialRender(){
+function generateString(obj = currentStore){
+  if (!currentStore.quizStarted){
+    return `
+            <h2>Welcome to the dreadful Penny Dreadful quiz!</h2>
+            <h3>Press the button below to begin:</h3>
+            <form id='quizForm'>
+            <button type='submit' (click)='submitForm()'>Begin</button>
+            </form>`
+  }
+  else if (currentStore.questionNumber!==currentStore.totalQuestions){
+    return `
+            <h3>${currentStore.questions[currentStore.questionNumber].question}</h3>
+            <form id='quizForm'>
+            <input type='radio' id='A' name='A' value=0>
+            <label for='A'></label>${currentStore.questions[currentStore.questionNumber].answers[0]}<br>
+            <input type='radio' id='B' name='B' value=1>
+            <label for='B'></label>${currentStore.questions[currentStore.questionNumber].answers[1]}<br>
+            <input type='radio' id='C' name='C' value=2>
+            <label for='C'></label>${currentStore.questions[currentStore.questionNumber].answers[2]}<br>
+            <input type='radio' id='D' name='D' value=3>
+            <label for='D'></label>${currentStore.questions[currentStore.questionNumber].answers[3]}<br>
+            <input type="submit" value='Begin Quiz'>
+            </form>
+            <p class='correctStatement hidden'>
+                The correct answer was:
+            </p>
+        <footer>
+            <h5 class='Progress hidden'>Question Progress: ${currentStore.questionNumber}/5</h5>
+            <h5 class='Score hidden'>Current Score: ${currentStore.score}/5</h5>
+        </footer>`;
+  }
+  else {
+    return ''
+  }
+}
+
+function handleRender(){
   //Supply the html with the main page content
+  console.log('render ran')
+  $('main').html(generateString())
 }
 
-function eventHandlerStartButton(){
+function handleStartButton(){
   //Question 1 of the quiz and associated html change button text/functionality
+  console.log('start ran')
+  $('main').on('click','#quizForm',function(){
+    if (!currentStore.quizStarted){
+      currentStore.quizStarted = true
+    }
+    else if ($('h5').is('hidden')){
+      console.log('button test');
+      currentStore.questionNumber++;
+    }
+    else if (currentStore.questionNumber===currentStore.totalQuestions){
+      currentStore = store
+    }
+    else {};
+    console.log(currentStore.questionNumber)
+    handleRender(currentStore)})
 }
 
-function eventHandlerQuestionCheck(){
+function handleQuestionCheck(){
   //post the html for correct/wrong, post the correct answer, change the submit functionality
+  console.log('question check ran')
 }
 
-function answeredQuestionEventHandler(){
+function handleAnsweredQuestion(){
   //test if the current question is last question
   //If yes, then move to final page and all associated html (change button function)
   //If no, then move to next question page and all associated html (change button function)
+  console.log('answered question ran')
 }
 
-function eventHandlerReset(){
+function handleReset(){
   //reset the variables for questionNumber and score (and quizStarted?)
   //fill html with initialRender condition
+  console.log('reset ran')
 }
 
+function handleApp(){
+  handleRender();
+  handleStartButton();
+  handleQuestionCheck();
+  handleAnsweredQuestion();
+  handleReset();
+}
+
+$(handleApp);
 /**
  * 
  * Technical requirements:
