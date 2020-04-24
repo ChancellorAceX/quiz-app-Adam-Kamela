@@ -156,8 +156,6 @@ function handleQuestionCheck(){
 }
 
 function handleReset(){
-  //reset the variables for questionNumber and score (and quizStarted?)
-  //fill html with initialRender condition
   console.log('reset ran');
   $('main').on('click','.restartButton',function(){
     for(let i=0;i<store.questions.length;i++){
@@ -170,12 +168,14 @@ function handleReset(){
   })
 }
 
+
 function handleApp(){
   handleRender();
   handleStartButton();
   handleQuestionCheck();
   handleReset();
 }
+
 
 $(handleApp);
 /**
